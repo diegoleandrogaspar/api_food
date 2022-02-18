@@ -21,6 +21,5 @@ public class AlteracaoCozinhaMain {
         cozinha.setNome("Brasileira");
 
         cozinhaRepository.salvar(cozinha);
-
     }
 }
