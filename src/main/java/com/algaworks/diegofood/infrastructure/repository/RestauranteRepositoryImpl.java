@@ -2,12 +2,14 @@ package com.algaworks.diegofood.infrastructure.repository;
 
 import com.algaworks.diegofood.domain.model.Restaurante;
 import com.algaworks.diegofood.domain.repository.RestauranteRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
 public class RestauranteRepositoryImpl implements RestauranteRepository {
 
     @PersistenceContext
@@ -33,7 +35,6 @@ public class RestauranteRepositoryImpl implements RestauranteRepository {
     @Transactional
     @Override
     public void remover(Restaurante restaurante) {
-
         restaurante = buscar(restaurante.getId());
         manager.remove(restaurante);
     }

@@ -2,12 +2,14 @@ package com.algaworks.diegofood.infrastructure.repository;
 
 import com.algaworks.diegofood.domain.model.Cidade;
 import com.algaworks.diegofood.domain.repository.CidadeRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
 public class CidadeRepositoryImpl implements CidadeRepository {
 
     @PersistenceContext
