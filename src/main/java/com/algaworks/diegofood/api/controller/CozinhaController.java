@@ -1,5 +1,6 @@
 package com.algaworks.diegofood.api.controller;
 
+import com.algaworks.diegofood.api.model.CozinhasXmlWrapper;
 import com.algaworks.diegofood.domain.model.Cozinha;
 import com.algaworks.diegofood.domain.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class CozinhaController {
     @GetMapping()
     public List<Cozinha> listar(){
         return cozinhaRepository.listar();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    public CozinhasXmlWrapper listarXml(){
+        return new CozinhasXmlWrapper(cozinhaRepository.listar());
     }
 
     @GetMapping("{cozinhaId}")
