@@ -32,7 +32,7 @@ public class CozinhaController {
     public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId){
         Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(cozinha)
+          return ResponseEntity.ok(cozinha);
     }
 
 }
