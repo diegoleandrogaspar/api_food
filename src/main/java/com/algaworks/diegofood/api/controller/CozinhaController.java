@@ -1,6 +1,8 @@
 package com.algaworks.diegofood.api.controller;
 
 import com.algaworks.diegofood.api.model.CozinhasXmlWrapper;
+import com.algaworks.diegofood.domain.exception.EntidadeEmUsoException;
+import com.algaworks.diegofood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.diegofood.domain.model.Cozinha;
 import com.algaworks.diegofood.domain.repository.CozinhaRepository;
 import com.algaworks.diegofood.domain.service.CadastroCozinhaService;
@@ -66,17 +68,14 @@ public class CozinhaController {
 
     @DeleteMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId){
-       try{
-           Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+       try {
+           cadastroCozinhaService.excluir(cozinhaId);
+           return ResponseEntity.noContent().build();
 
-           if (cozinha != null){
-               cozinhaRepository.remover(cozinha);
-
-               return  ResponseEntity.noContent().build();
-           }
+       } catch (EntidadeNaoEncontradaException ex){
            return ResponseEntity.notFound().build();
 
-       }catch (DataIntegrityViolationException exception){
+       }catch (EntidadeEmUsoException ex){
            return ResponseEntity.status(HttpStatus.CONFLICT).build();
        }
 

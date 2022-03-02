@@ -1,8 +1,14 @@
 package com.algaworks.diegofood.domain.service;
 
+import com.algaworks.diegofood.domain.exception.EntidadeEmUsoException;
+import com.algaworks.diegofood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.diegofood.domain.model.Cozinha;
 import com.algaworks.diegofood.domain.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +19,19 @@ public class CadastroCozinhaService {
 
     public Cozinha salvar(Cozinha cozinha){
         return cozinhaRepository.salvar(cozinha);
+    }
+
+    public void excluir(Long cozinhaId){
+       try {
+           cozinhaRepository.remover(cozinhaId);
+       } catch (EmptyResultDataAccessException ex){
+           throw new EntidadeNaoEncontradaException(
+                   String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
+
+       } catch (DataIntegrityViolationException ex){
+           throw new EntidadeEmUsoException(
+                   String.format("Cozinha de código %d não pode ser removida, pois está em uso", cozinhaId));
+       }
     }
 
 }
