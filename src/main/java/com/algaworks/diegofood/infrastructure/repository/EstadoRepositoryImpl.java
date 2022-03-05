@@ -36,12 +36,12 @@ public class EstadoRepositoryImpl implements EstadoRepository {
 
     @Transactional
     @Override
-    public void remover(Long id) {
+    public void remover(Long estadoId) {
+       Estado estado = buscar(estadoId);
 
-        Estado estado = buscar(id);
-        if (estado == null) {
-            throw new EmptyResultDataAccessException(1);
-        }
-        manager.remove(estado);
+       if (estadoId == null){
+           throw new EmptyResultDataAccessException(1);
+       }
+          manager.remove(estadoId);
     }
 }
