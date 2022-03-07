@@ -42,6 +42,6 @@ public class EstadoRepositoryImpl implements EstadoRepository {
        if (estadoId == null){
            throw new EmptyResultDataAccessException(1);
        }
-          manager.remove(estadoId);
+          manager.remove(estado);
     }
 }
