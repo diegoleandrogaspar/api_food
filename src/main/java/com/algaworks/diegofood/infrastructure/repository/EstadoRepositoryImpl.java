@@ -24,6 +24,7 @@ public class EstadoRepositoryImpl implements EstadoRepository {
     }
 
     @Override
+    @Transactional
     public Estado buscar(Long id) {
         return manager.find(Estado.class, id);
     }
