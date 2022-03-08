@@ -20,14 +20,14 @@ public class CadastroEstadoService {
     }
 
     public void excluir(Long estadoId){
-      try {
-          estadoRepository.remover(estadoId);
-      }catch(EmptyResultDataAccessException ex){
-          throw new EntidadeNaoEncontradaException(String.format("Não existe um cadastro com o código %d", estadoId));
+        try {
+            estadoRepository.remover(estadoId);
+        }catch (EmptyResultDataAccessException ex){
+            throw new EntidadeNaoEncontradaException(String.format("não foi feito o registo do código %d", estadoId));
 
-      }catch(DataIntegrityViolationException e){
-          throw new EntidadeEmUsoException(String.format("Este código %d está em uso, portanto não pode ser removido", estadoId));
-      }
-
+        }catch (DataIntegrityViolationException ex){
+            throw new EntidadeEmUsoException(String.format("Esse código %d está em uso", estadoId));
+        }
     }
+
 }
