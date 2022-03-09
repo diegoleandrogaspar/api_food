@@ -21,7 +21,7 @@ public class CadastroCidadeService {
   private EstadoRepository estadoRepository;
 
   public Cidade salvar(Cidade cidade){
-      Long estadoId = cidade.getId();
+      Long estadoId = cidade.getEstado().getId();
       Estado estado = estadoRepository.buscar(estadoId);
 
       if (estado == null){
@@ -41,5 +41,6 @@ public class CadastroCidadeService {
     }catch (DataIntegrityViolationException ex){
         throw new EntidadeEmUsoException(String.format("Esse recurso %d não pode ser deletado, pois está em uso", cidadeId));
     }
+
    }
 }

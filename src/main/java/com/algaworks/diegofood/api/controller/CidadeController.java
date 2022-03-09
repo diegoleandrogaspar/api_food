@@ -53,7 +53,7 @@ public class CidadeController {
   public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,@RequestBody Cidade cidade){
        Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
 
-    if (cidade != null){
+    if (cidadeAtual != null){
         BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
         cidadeAtual = cadastroCidadeService.salvar(cidadeAtual);
@@ -67,7 +67,7 @@ public class CidadeController {
 
     try{
        cadastroCidadeService.deletar(cidadeId);
-       return ResponseEntity.notFound().build();
+       return ResponseEntity.noContent().build();
 
     }catch (EntidadeNaoEncontradaException ex){
         return ResponseEntity.notFound().build();
