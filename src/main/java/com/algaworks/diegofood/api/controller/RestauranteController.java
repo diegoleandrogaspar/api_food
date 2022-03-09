@@ -89,7 +89,6 @@ public class RestauranteController {
         merge(campos, restauranteAtual);
 
         return atualizar(restauranteId, restauranteAtual);
-
     }
 
     private void merge(Map<String, Object> camposOrigem, Restaurante restauranteDestino) {
@@ -111,6 +110,4 @@ public class RestauranteController {
             ReflectionUtils.setField(field, restauranteDestino, novoValor);
         } );
     }
-
-
 }

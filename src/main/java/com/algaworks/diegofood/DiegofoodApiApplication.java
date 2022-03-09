@@ -9,5 +9,4 @@ public class DiegofoodApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DiegofoodApiApplication.class, args);
 	}
-
 }

@@ -41,6 +41,5 @@ public class CadastroCidadeService {
     }catch (DataIntegrityViolationException ex){
         throw new EntidadeEmUsoException(String.format("Esse recurso %d não pode ser deletado, pois está em uso", cidadeId));
     }
-
    }
 }
