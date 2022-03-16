@@ -51,18 +51,23 @@ public class CidadeController {
   }
 
   @PutMapping("/{cidadeId}")
-  public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,@RequestBody Cidade cidade){
-       Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
+  public ResponseEntity<?> atualizar(@PathVariable Long cidadeId,@RequestBody Cidade cidade) {
+      try {
+          Cidade cidadeAtual = cidadeRepository.findById(cidadeId).orElse(null);
 
-    if (cidadeAtual.isPresent()){
-        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+          if (cidadeAtual != null) {
+              BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
-        Cidade cidadeSalva = cadastroCidadeService.salvar(cidadeAtual.get());
-        return ResponseEntity.ok(cidadeSalva);
+              cidadeAtual = cadastroCidadeService.salvar(cidadeAtual);
+              return ResponseEntity.ok(cidadeAtual);
+          }
+          return ResponseEntity.notFound().build();
+
+      }catch (EntidadeNaoEncontradaException ex){
+          return ResponseEntity.badRequest()
+                  .body(ex.getMessage());
       }
-        return ResponseEntity.notFound().build();
   }
-
   @DeleteMapping("/{cidadeId}")
   public ResponseEntity<?> deletar(@PathVariable Long cidadeId){
 
