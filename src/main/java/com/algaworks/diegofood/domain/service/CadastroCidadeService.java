@@ -24,7 +24,7 @@ public class CadastroCidadeService {
       Long estadoId = cidade.getEstado().getId();
 
       Estado estado = estadoRepository.findById(estadoId)
-           .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format("Não existe cadastro com o código %d", estadoId)));
+           .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format("Não existe cadastro de estado com  código %d", estadoId)));
 
       cidade.setEstado(estado);
       return cidadeRepository.save(cidade);
@@ -35,10 +35,12 @@ public class CadastroCidadeService {
        cidadeRepository.deleteById(cidadeId);
 
     }catch (EmptyResultDataAccessException ex){
-        throw new EntidadeNaoEncontradaException(String.format("Este código %d não foi encontrado", cidadeId));
+        throw new EntidadeNaoEncontradaException(
+                String.format("Não existe um cadastro de cidade com código %d", cidadeId));
 
     }catch (DataIntegrityViolationException ex){
-        throw new EntidadeEmUsoException(String.format("Esse recurso %d não pode ser deletado, pois está em uso", cidadeId));
+        throw new EntidadeEmUsoException(
+                String.format("Cidade de código %d não pode ser removida, pois está em uso", cidadeId));
     }
    }
 }

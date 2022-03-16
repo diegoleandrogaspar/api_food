@@ -46,14 +46,14 @@ public class EstadoController {
     }
 
     @PutMapping("/{estadoId}")
-    public ResponseEntity<?> atualizar(@PathVariable Long estadoId,
+    public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId,
                                        @RequestBody Estado estado) {
-        Optional<Estado> estadoAtual = estadoRepository.findById(estadoId);
+        Estado estadoAtual = estadoRepository.findById(estadoId).orElse(null);
 
-        if (estadoAtual.isPresent()) {
-          BeanUtils.copyProperties(estado, estadoAtual.get(), "id");
+        if (estadoAtual != null) {
+          BeanUtils.copyProperties(estado, estadoAtual, "id");
 
-          Estado estadoSalvo = cadastroEstadoService.salvar(estadoAtual.get());
+          estadoAtual = cadastroEstadoService.salvar(estadoAtual);
           return ResponseEntity.ok(estadoAtual);
         }
           return ResponseEntity.notFound().build();
@@ -61,7 +61,6 @@ public class EstadoController {
 
    @DeleteMapping("/{estadoId}")
    public ResponseEntity<?> deletar(@PathVariable Long estadoId){
-
       try {
           cadastroEstadoService.excluir(estadoId);
           return ResponseEntity.noContent().build();
@@ -73,6 +72,5 @@ public class EstadoController {
           return ResponseEntity.status(HttpStatus.CONFLICT)
                   .body(ex.getMessage());
       }
-
    }
 }
