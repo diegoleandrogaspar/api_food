@@ -1,6 +1,7 @@
 package com.algaworks.diegofood.domain.service;
 
 import com.algaworks.diegofood.domain.exception.EntidadeEmUsoException;
+import com.algaworks.diegofood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.diegofood.domain.model.Cozinha;
 import com.algaworks.diegofood.domain.model.Restaurante;
 import com.algaworks.diegofood.domain.repository.CozinhaRepository;
@@ -20,8 +21,9 @@ public class CadastroRestauranteService {
 
     public Restaurante salvar(Restaurante restaurante){
        Long cozinhaId = restaurante.getCozinha().getId();
+
         Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
-                .orElseThrow(() -> new EntidadeEmUsoException(
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         String.format("Não existe cadastro de cozinha com código %d", cozinhaId)));
 
         restaurante.setCozinha(cozinha);
