@@ -59,6 +59,12 @@ public class TesteController {
         return restauranteRepository.findTop2ByNomeContaining(nome);
     }
 
+    @GetMapping("/restaurante/por-nome-e-frete")
+    public List<Restaurante> restaurantesPorNomeFrete(String nome,
+           BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+        return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+    }
+
     @GetMapping("/restaurantes/total")
     public int cozinhaTotal(Long cozinhaId) {
         return restauranteRepository.countByCozinhaId(cozinhaId);
