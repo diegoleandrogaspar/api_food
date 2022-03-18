@@ -65,7 +65,7 @@ public class TesteController {
         return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 
-    @GetMapping("/restaurantes/total")
+    @GetMapping("/restaurante/total")
     public int cozinhaTotal(Long cozinhaId) {
         return restauranteRepository.countByCozinhaId(cozinhaId);
     }

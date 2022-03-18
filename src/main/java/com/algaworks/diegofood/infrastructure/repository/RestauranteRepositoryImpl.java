@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public class RestaurantRepositoryImpl {
+public class RestauranteRepositoryImpl {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -17,8 +17,8 @@ public class RestaurantRepositoryImpl {
     public List<Restaurante> find(String nome,
               BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal){
 
-        var jpql = "from Restaurante where nome like :nome"
-                + "and taxaFrete between : taxaInicial and :taxaFinal";
+        var jpql = "from Restaurante where nome like :nome "
+                + "and taxaFrete between :taxaInicial and :taxaFinal";
 
         return entityManager.createQuery(jpql, Restaurante.class)
                 .setParameter("nome", "%" + nome + "%")
