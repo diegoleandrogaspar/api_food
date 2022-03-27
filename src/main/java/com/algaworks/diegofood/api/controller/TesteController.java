@@ -65,8 +65,17 @@ public class TesteController {
         return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 
-    @GetMapping("/restaurante/total")
+    @GetMapping("/restaurante/count-por-nome")
     public int cozinhaTotal(Long cozinhaId) {
         return restauranteRepository.countByCozinhaId(cozinhaId);
     }
+
+    @GetMapping("/restaurante/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+         var comFreteGratis = new RestauranteComFreteGratisSpecification();
+
+         return restauranteRepository.
+    }
+
+
 }
