@@ -72,9 +72,7 @@ public class TesteController {
 
     @GetMapping("/restaurante/com-frete-gratis")
     public List<Restaurante> restaurantesComFreteGratis(String nome) {
-         var comFreteGratis = new RestauranteComFreteGratisSpecification();
 
-         return restauranteRepository.
     }
 
 
