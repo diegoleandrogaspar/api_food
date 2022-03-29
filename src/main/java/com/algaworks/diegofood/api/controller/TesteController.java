@@ -4,6 +4,8 @@ import com.algaworks.diegofood.domain.model.Cozinha;
 import com.algaworks.diegofood.domain.model.Restaurante;
 import com.algaworks.diegofood.domain.repository.CozinhaRepository;
 import com.algaworks.diegofood.domain.repository.RestauranteRepository;
+import com.algaworks.diegofood.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import com.algaworks.diegofood.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +74,11 @@ public class TesteController {
 
     @GetMapping("/restaurante/com-frete-gratis")
     public List<Restaurante> restaurantesComFreteGratis(String nome) {
+
+      var comFreteGratis =  new RestauranteComFreteGratisSpec();
+      var comNomeSemelhante =  new RestauranteComNomeSemelhanteSpec(nome);
+
+      return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
 
     }
 
