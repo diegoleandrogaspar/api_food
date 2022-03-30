@@ -41,39 +41,39 @@ public class TesteController {
         return cozinhaRepository.existsByNome(nome);
     }
 
-    @GetMapping("/restaurante/por-taxa-frete")
+    @GetMapping("/restaurantes/por-taxa-frete")
     public List<Restaurante> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
         return restauranteRepository.queryByTaxaFreteBetween(taxaInicial,taxaFinal);
     }
 
-    @GetMapping("/restaurante/por-nome")
+    @GetMapping("/restaurantes/por-nome")
     public List<Restaurante> restaurantesPorTaxaFrete(String nome, Long cozinhaId) {
         return restauranteRepository.consultarPorNome(nome,cozinhaId);
     }
 
-    @GetMapping("/restaurante/primeiro-por-nome")
+    @GetMapping("/restaurantes/primeiro-por-nome")
     public Optional<Restaurante> restaurantesPrimeiroPorNome(String nome) {
         return restauranteRepository.findFirstRestauranteByNomeContaining(nome);
     }
 
-    @GetMapping("/restaurante/top2-por-nome")
+    @GetMapping("/restaurantes/top2-por-nome")
     public List<Restaurante> restaurantesTop2PorNome(String nome) {
         return restauranteRepository.findTop2ByNomeContaining(nome);
     }
 
-    @GetMapping("/restaurante/por-nome-e-frete")
+    @GetMapping("/restaurantes/por-nome-e-frete")
     public List<Restaurante> restaurantesPorNomeFrete(String nome,
            BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
         return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
     }
 
-    @GetMapping("/restaurante/count-por-nome")
+    @GetMapping("/restaurantes/count-por-nome")
     public int cozinhaTotal(Long cozinhaId) {
         return restauranteRepository.countByCozinhaId(cozinhaId);
     }
 
-    @GetMapping("/restaurante/com-frete-gratis")
-    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+    @GetMapping("/restaurantes/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(@RequestParam String nome) {
 
       var comFreteGratis =  new RestauranteComFreteGratisSpec();
       var comNomeSemelhante =  new RestauranteComNomeSemelhanteSpec(nome);
@@ -81,6 +81,5 @@ public class TesteController {
       return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
 
     }
-
 
 }

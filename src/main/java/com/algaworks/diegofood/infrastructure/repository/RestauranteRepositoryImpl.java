@@ -47,7 +47,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
-        TypedQuery<Restaurante> query = entityManager.createQuery(criteriaQuery);
+        var query = entityManager.createQuery(criteriaQuery);
 
         return query.getResultList();
 
