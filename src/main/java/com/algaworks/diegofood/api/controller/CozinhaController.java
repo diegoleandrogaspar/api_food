@@ -18,6 +18,11 @@ import java.util.Optional;
 @RequestMapping(value = "/cozinhas")
 public class CozinhaController {
 
+
+    public CozinhaController(CozinhaRepository cozinhaRepository) {
+        this.cozinhaRepository = cozinhaRepository;
+    }
+
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
