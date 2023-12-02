@@ -1,4 +1,4 @@
-package com.algaworks.diegofood;
+package com.diegoleandro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

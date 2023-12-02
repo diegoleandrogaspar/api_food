@@ -1,4 +1,4 @@
-package com.algaworks.diegofood;
+package com.diegoleandro.api.controller.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
