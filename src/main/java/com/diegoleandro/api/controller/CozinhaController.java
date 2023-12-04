@@ -1,5 +1,7 @@
 package com.diegoleandro.api.controller;
 
+import com.diegoleandro.api.domain.exception.EntidadeEmUsoException;
+import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
 import com.diegoleandro.api.domain.model.Cozinha;
 import com.diegoleandro.api.domain.repository.CozinhaRepository;
 import com.diegoleandro.api.domain.service.CadastroCozinhaService;
@@ -29,7 +31,6 @@ public class CozinhaController {
         return cozinhaRepository.listar();
     }
 
-
     @GetMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
         Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
@@ -53,7 +54,7 @@ public class CozinhaController {
         if (cozinhaAtual != null) {
             BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
-            cozinhaAtual = cozinhaRepository.salvar(cozinhaAtual);
+            cozinhaAtual = cadastroCozinhaService.salvar(cozinhaAtual);
             return ResponseEntity.ok(cozinhaAtual);
         }
         return ResponseEntity.notFound().build();
@@ -62,16 +63,14 @@ public class CozinhaController {
     @DeleteMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> deletar(@PathVariable Long cozinhaId){
         try {
-            Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+           cadastroCozinhaService.excluir(cozinhaId);
+           return ResponseEntity.notFound().build();
 
-            if (cozinha != null) {
-                cozinhaRepository.remover(cozinha);
+        } catch (EntidadeNaoEncontradaException exception) {
+            return ResponseEntity.notFound().build();
 
-                return ResponseEntity.noContent().build();
-            }
-                return ResponseEntity.notFound().build();
-        } catch (DataIntegrityViolationException exception) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (EntidadeEmUsoException exception) {
+           return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
