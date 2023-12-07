@@ -7,7 +7,6 @@ import com.diegoleandro.api.domain.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -49,6 +48,11 @@ public class TesteController {
         return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
     }
 
+    @GetMapping("/restaurantes/por-nome-e-frete")
+    public List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+        return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+    }
+
     @GetMapping("/restaurantes/por-nome")
     public List<Restaurante> restaurantePorCozinhaId(String nome, Long id) {
         return restauranteRepository.consultarPorNome(nome, id);
@@ -63,9 +67,4 @@ public class TesteController {
     public List<Restaurante> restaurantePorCozinhaId(String nome) {
         return restauranteRepository.findTop2ByNomeContaining(nome);
     }
-
-
-
-
-
 }
