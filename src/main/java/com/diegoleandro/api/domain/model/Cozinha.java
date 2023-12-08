@@ -30,7 +30,6 @@ public class Cozinha {
     private List<Restaurante> restaurantes;
 
 
-
     public List<Restaurante> getRestaurantes() {
         return restaurantes;
     }
