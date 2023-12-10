@@ -22,7 +22,7 @@ public class CadastroEstadoService {
         return estadoRepository.save(estado);
     }
 
-    public void remover(@PathVariable Long estadoId) {
+    public void remover(Long estadoId) {
         try {
             estadoRepository.deleteById(estadoId);
         } catch (EmptyResultDataAccessException e) {

@@ -1,4 +1,4 @@
-package com.diegoleandro.api.infrastructure.repository;
+package com.diegoleandro.api.infrastructure;
 
 import com.diegoleandro.api.domain.model.Restaurante;
 import com.diegoleandro.api.domain.repository.RestauranteRepository;
@@ -62,10 +62,6 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
     public List<Restaurante> findComFreteGratis(String nome) {
         return restauranteRepository.findAll(comFreteGratis()
                 .and(comNomeSemelhante(nome)));
-
     }
-
-
-
 
 }
