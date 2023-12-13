@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(repositoryBaseClass = CustomJpaRepositoryImpl.class)
 public class DiegofoodApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DiegofoodApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DiegofoodApiApplication.class, args);
+    }
 }

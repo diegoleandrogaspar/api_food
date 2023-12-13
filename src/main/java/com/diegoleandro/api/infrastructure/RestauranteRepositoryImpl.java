@@ -1,11 +1,12 @@
 package com.diegoleandro.api.infrastructure;
 
-import com.diegoleandro.api.domain.model.Restaurante;
-import com.diegoleandro.api.domain.repository.RestauranteRepository;
-import com.diegoleandro.api.domain.repository.RestauranteRepositoryQueries;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
+import static com.diegoleandro.api.infrastructure.repository.spec.RestaurantesSpecs.comFreteGratis;
+import static com.diegoleandro.api.infrastructure.repository.spec.RestaurantesSpecs.comNomeSemelhante;
 
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,13 +14,13 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import com.diegoleandro.api.domain.model.Restaurante;
+import com.diegoleandro.api.domain.repository.RestauranteRepository;
+import com.diegoleandro.api.domain.repository.RestauranteRepositoryQueries;
 
-import static com.diegoleandro.api.infrastructure.repository.spec.RestaurantesSpecs.comFreteGratis;
-import static com.diegoleandro.api.infrastructure.repository.spec.RestaurantesSpecs.comNomeSemelhante;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
@@ -63,5 +64,4 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
         return restauranteRepository.findAll(comFreteGratis()
                 .and(comNomeSemelhante(nome)));
     }
-
 }

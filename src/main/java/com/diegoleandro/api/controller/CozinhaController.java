@@ -7,10 +7,8 @@ import com.diegoleandro.api.domain.repository.CozinhaRepository;
 import com.diegoleandro.api.domain.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,9 +73,5 @@ public class CozinhaController {
            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-
-
-
-
 
 }

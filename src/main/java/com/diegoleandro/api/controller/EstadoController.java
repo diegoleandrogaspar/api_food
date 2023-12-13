@@ -70,10 +70,5 @@ public class EstadoController {
         catch (EntidadeEmUsoException exception) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-
     }
-
-    
-    
-    
 }
