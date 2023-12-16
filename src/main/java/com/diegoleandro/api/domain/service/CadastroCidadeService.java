@@ -1,5 +1,6 @@
 package com.diegoleandro.api.domain.service;
 
+import com.diegoleandro.api.domain.exception.CidadeNaoEncontradaException;
 import com.diegoleandro.api.domain.exception.EntidadeEmUsoException;
 import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
 import com.diegoleandro.api.domain.model.Cidade;
@@ -25,7 +26,13 @@ public class CadastroCidadeService  {
     @Autowired
     private EstadoRepository estadoRepository;
 
+    @Autowired
+    private CadastroEstadoService cadastroEstadoService;
+
     public Cidade salvar(Cidade cidade) {
+        Long estadoId = cidade.getEstado().getId();
+        Estado estado = cadastroEstadoService.buscarOuFalhar(estadoId);
+        cidade.setEstado(estado);
         return cidadeRepository.save(cidade);
     }
 
@@ -33,7 +40,7 @@ public class CadastroCidadeService  {
         try {
             cidadeRepository.deleteById(cidadeId);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
+            throw new CidadeNaoEncontradaException(
                   String.format(MSG_CIDADE_NAO_CADASTRADA, cidadeId));
 
         } catch (DataIntegrityViolationException e) {
@@ -44,7 +51,7 @@ public class CadastroCidadeService  {
 
     public Cidade buscarOuFalhar(Long cidadeId) {
         return cidadeRepository.findById(cidadeId)
-             .orElseThrow(() -> new EntidadeNaoEncontradaException(
+             .orElseThrow(() -> new CidadeNaoEncontradaException(
                      String.format(MSG_CIDADE_NAO_CADASTRADA, cidadeId)));
     }
 

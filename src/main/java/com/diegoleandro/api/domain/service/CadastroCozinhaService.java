@@ -1,5 +1,6 @@
 package com.diegoleandro.api.domain.service;
 
+import com.diegoleandro.api.domain.exception.CozinhaNaoEncontradaException;
 import com.diegoleandro.api.domain.exception.EntidadeEmUsoException;
 import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
 import com.diegoleandro.api.domain.model.Cozinha;
@@ -29,7 +30,7 @@ public class CadastroCozinhaService {
        try {
            cozinhaRepository.deleteById(cozinhaId);
        } catch (EmptyResultDataAccessException e){
-           throw new EntidadeNaoEncontradaException(
+           throw new CozinhaNaoEncontradaException(
                 String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId));
 
        }catch (DataIntegrityViolationException e){
@@ -40,7 +41,7 @@ public class CadastroCozinhaService {
 
     public Cozinha buscarOuFalhar(Long cozinhaId) {
         return cozinhaRepository.findById(cozinhaId)
-              .orElseThrow(() -> new EntidadeNaoEncontradaException(
+              .orElseThrow(() -> new CozinhaNaoEncontradaException(
                     String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
     }
 

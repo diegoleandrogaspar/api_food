@@ -1,6 +1,7 @@
 package com.diegoleandro.api.controller;
 
 import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
+import com.diegoleandro.api.domain.exception.NegocioException;
 import com.diegoleandro.api.domain.model.Restaurante;
 import com.diegoleandro.api.domain.repository.RestauranteRepository;
 import com.diegoleandro.api.domain.service.CadastroRestauranteService;
@@ -40,7 +41,11 @@ public class RestauranteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-        return cadastroRestauranteService.salvar(restaurante);
+        try {
+            return cadastroRestauranteService.salvar(restaurante);
+        } catch (EntidadeNaoEncontradaException e){
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @PutMapping("/{restauranteId}")
@@ -50,8 +55,11 @@ public class RestauranteController {
 
         BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
-        return cadastroRestauranteService.salvar(restauranteAtual);
-
+        try {
+            return cadastroRestauranteService.salvar(restauranteAtual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @PatchMapping("/{restauranteId}")

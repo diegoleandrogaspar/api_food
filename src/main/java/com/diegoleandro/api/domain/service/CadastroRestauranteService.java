@@ -1,6 +1,7 @@
 package com.diegoleandro.api.domain.service;
 
 import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
+import com.diegoleandro.api.domain.exception.RestauranteNaoEncontradoException;
 import com.diegoleandro.api.domain.model.Cozinha;
 import com.diegoleandro.api.domain.model.Restaurante;
 import com.diegoleandro.api.domain.repository.CozinhaRepository;
@@ -32,7 +33,7 @@ public class CadastroRestauranteService {
 
     public Restaurante buscarOuFalhar(Long restauranteId) {
         return restauranteRepository.findById(restauranteId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                .orElseThrow(() -> new RestauranteNaoEncontradoException(
                         String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
     }
 }
