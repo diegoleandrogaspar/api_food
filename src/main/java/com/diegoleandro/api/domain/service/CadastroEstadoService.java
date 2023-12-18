@@ -38,8 +38,6 @@ public class CadastroEstadoService {
         return estadoRepository.findById(estadoId)
                 .orElseThrow(() -> new EstadoNaoEncontradoException(estadoId));
     }
-
-
 }
 
 

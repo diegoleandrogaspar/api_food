@@ -35,6 +35,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.BAD_REQUEST, request);
     }
 
+    /*
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -49,6 +50,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                     .mensagem((String) body)
                     .build();
         }
+        return super.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+     */
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 }
