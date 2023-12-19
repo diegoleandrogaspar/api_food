@@ -7,7 +7,7 @@ import com.diegoleandro.api.domain.exception.NegocioException;
 import com.diegoleandro.api.domain.model.Cidade;
 import com.diegoleandro.api.domain.repository.CidadeRepository;
 import com.diegoleandro.api.domain.service.CadastroCidadeService;
-import com.diegoleandro.api.exceptionhandler.Problema;
+import com.diegoleandro.api.exceptionhandler.Problem;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
