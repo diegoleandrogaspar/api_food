@@ -1,12 +1,11 @@
 package com.diegoleandro.api.exceptionhandler;
 
-import com.diegoleandro.api.domain.exception.EntidadeEmUsoException;
-import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
-import com.diegoleandro.api.domain.exception.NegocioException;
+import com.diegoleandro.domain.exception.EntidadeEmUsoException;
+import com.diegoleandro.domain.exception.EntidadeNaoEncontradaException;
+import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.core.validation.ValidacaoException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.sun.net.httpserver.Headers;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,8 +25,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.ServletException;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +58,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
@@ -78,7 +75,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Problem problem = createProblemBuilder(status, problemType, detail).build();
 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-
     }
 
     @Override
@@ -99,10 +95,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             return handleMethodArgumentTypeMistatch(
                     (MethodArgumentTypeMismatchException) ex, headers, status, request);
         }
-
             return super.handleTypeMismatch(ex, headers, status, request);
     }
-
 
     private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -132,7 +126,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
-
     private ResponseEntity<Object> handleMethodArgumentTypeMistatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
@@ -144,7 +137,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
-
 
     private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         String path = ex.getPath().stream()
@@ -160,7 +152,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return handleExceptionInternal(ex, problem, headers, status, request);
-
     }
 
     private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -186,7 +177,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
 
@@ -208,7 +198,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = ex.getMessage();
 
         Problem problem = createProblemBuilder(status, problemType, detail)
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .userMessage(detail)
                 .build();
 
@@ -234,14 +224,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         if (body == null) {
             body = Problem.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .title(status.getReasonPhrase())
                 .status(status.value())
                 .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
                 .build();
         } else if (body instanceof String) {
             body = Problem.builder()
-                  .timestamp(LocalDateTime.now())
+                  .timestamp(OffsetDateTime.now())
                   .title((String) body)
                   .status(status.value())
                   .userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL)
@@ -254,7 +244,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
 
         return Problem.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(OffsetDateTime.now())
                 .status(status.value())
                 .type(problemType.getUri())
                 .title(problemType.getTitle())

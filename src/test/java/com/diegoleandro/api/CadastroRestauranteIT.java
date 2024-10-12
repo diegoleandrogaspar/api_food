@@ -1,9 +1,9 @@
 package com.diegoleandro.api;
 
-import com.diegoleandro.api.domain.model.Cozinha;
-import com.diegoleandro.api.domain.model.Restaurante;
-import com.diegoleandro.api.domain.repository.CozinhaRepository;
-import com.diegoleandro.api.domain.repository.RestauranteRepository;
+import com.diegoleandro.domain.model.Cozinha;
+import com.diegoleandro.domain.model.Restaurante;
+import com.diegoleandro.domain.repository.CozinhaRepository;
+import com.diegoleandro.domain.repository.RestauranteRepository;
 import com.diegoleandro.util.DatabaseCleaner;
 import com.diegoleandro.util.ResourceUtils;
 import  io.restassured.RestAssured;

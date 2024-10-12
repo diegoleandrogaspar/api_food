@@ -1,21 +1,18 @@
 package com.diegoleandro.api.controller;
 
-import com.diegoleandro.api.domain.exception.EntidadeEmUsoException;
-import com.diegoleandro.api.domain.exception.EntidadeNaoEncontradaException;
-import com.diegoleandro.api.domain.model.Cozinha;
-import com.diegoleandro.api.domain.repository.CozinhaRepository;
-import com.diegoleandro.api.domain.service.CadastroCozinhaService;
+import com.diegoleandro.api.assembler.CozinhaConverter;
+import com.diegoleandro.api.model.CozinhaDTO;
+import com.diegoleandro.api.model.input.CozinhaInput;
+import com.diegoleandro.domain.model.Cozinha;
+import com.diegoleandro.domain.repository.CozinhaRepository;
+import com.diegoleandro.domain.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.server.ServerWebInputException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -28,31 +25,40 @@ public class CozinhaController {
     @Autowired
     private CadastroCozinhaService cadastroCozinhaService;
 
-    @GetMapping
-    public List<Cozinha> listar() {
+    @Autowired
+    private CozinhaConverter cozinhaConverter;
 
-        return cozinhaRepository.findAll();
+    @GetMapping
+    public List<CozinhaDTO> listar() {
+        List<Cozinha> todasCozinhas = cozinhaRepository.findAll();
+
+        return cozinhaConverter.toCollectionDTO(todasCozinhas);
     }
 
     @GetMapping("/{cozinhaId}")
-    public Cozinha buscar(@PathVariable Long cozinhaId) {
-       return cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+    public CozinhaDTO buscar(@PathVariable Long cozinhaId) {
+       Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+
+       return cozinhaConverter.toDto(cozinha);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) {
-        return cadastroCozinhaService.salvar(cozinha);
+    public CozinhaDTO adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
+        Cozinha cozinha = cozinhaConverter.toDomainObject(cozinhaInput);
+
+        cozinha = cadastroCozinhaService.salvar(cozinha);
+
+        return cozinhaConverter.toDto(cozinha);
     }
 
     @PutMapping("/{cozinhaId}")
-    public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha){
-
+    public CozinhaDTO atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid CozinhaInput cozinhaInput){
         Cozinha cozinhaAtual = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+        cozinhaConverter.copyToDomainObject(cozinhaInput, cozinhaAtual);
+        cozinhaAtual = cadastroCozinhaService.salvar(cozinhaAtual);
 
-        BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-
-        return cadastroCozinhaService.salvar(cozinhaAtual);
+        return cozinhaConverter.toDto(cozinhaAtual);
     }
 
     @DeleteMapping("/{cozinhaId}")
