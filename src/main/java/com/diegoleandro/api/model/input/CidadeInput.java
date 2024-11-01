@@ -16,5 +16,5 @@ public class CidadeInput {
 
     @Valid
     @NotNull
-    private EstadoInput estadoInput;
+    private EstadoInput estado;
 }
