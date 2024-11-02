@@ -38,7 +38,6 @@ public class CozinhaController {
     @GetMapping("/{cozinhaId}")
     public CozinhaDTO buscar(@PathVariable Long cozinhaId) {
        Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
-
        return cozinhaConverter.toDto(cozinha);
     }
 

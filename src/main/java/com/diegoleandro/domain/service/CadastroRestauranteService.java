@@ -1,6 +1,7 @@
 package com.diegoleandro.domain.service;
 
 import com.diegoleandro.domain.exception.RestauranteNaoEncontradoException;
+import com.diegoleandro.domain.model.Cidade;
 import com.diegoleandro.domain.model.Cozinha;
 import com.diegoleandro.domain.model.Restaurante;
 import com.diegoleandro.domain.repository.RestauranteRepository;
@@ -20,13 +21,20 @@ public class CadastroRestauranteService {
     @Autowired
     private CadastroCozinhaService cadastroCozinhaService;
 
+    @Autowired
+    private CadastroCidadeService cadastroCidadeService;
+
+
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
         Long cozinhaId = restaurante.getCozinha().getId();
+        Long cidadeId = restaurante.getEndereco().getCidade().getId();
 
         Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+        Cidade cidade = cadastroCidadeService.buscarOuFalhar(cidadeId);
 
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
 
         return restauranteRepository.save(restaurante);
     }

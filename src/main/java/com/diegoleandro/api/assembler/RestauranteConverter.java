@@ -2,6 +2,7 @@ package com.diegoleandro.api.assembler;
 
 import com.diegoleandro.api.model.RestauranteDTO;
 import com.diegoleandro.api.model.input.RestauranteInput;
+import com.diegoleandro.domain.model.Cidade;
 import com.diegoleandro.domain.model.Cozinha;
 import com.diegoleandro.domain.model.Restaurante;
 import org.modelmapper.ModelMapper;
@@ -39,6 +40,10 @@ public class RestauranteConverter implements Converter<Restaurante, RestauranteD
         // Para evitar org.hibernate.HibernateException: identifier of an instance of
         // com.diegoleandro.domain.model.Cozinha was altered from 1 to 2
         restaurante.setCozinha(new Cozinha());
+
+        if (restaurante.getEndereco() != null) {
+            restaurante.getEndereco().setCidade(new Cidade());
+        }
 
         modelMapper.map(restauranteInput, restaurante);
     }

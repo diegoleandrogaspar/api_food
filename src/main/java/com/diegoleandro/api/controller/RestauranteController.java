@@ -3,6 +3,8 @@ package com.diegoleandro.api.controller;
 import com.diegoleandro.api.assembler.RestauranteConverter;
 import com.diegoleandro.api.model.RestauranteDTO;
 import com.diegoleandro.api.model.input.RestauranteInput;
+import com.diegoleandro.domain.exception.CidadeNaoEncontradaException;
+import com.diegoleandro.domain.exception.CozinhaNaoEncontradaException;
 import com.diegoleandro.domain.exception.EntidadeNaoEncontradaException;
 import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.model.Restaurante;
@@ -50,7 +52,7 @@ public class RestauranteController {
         try {
             Restaurante restaurante = restauranteConverter.toDomainObject(restauranteInput);
             return restauranteConverter.toDto(cadastroRestauranteService.salvar(restaurante));
-        } catch (EntidadeNaoEncontradaException e){
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e){
             throw new NegocioException(e.getMessage());
         }
     }
@@ -67,7 +69,7 @@ public class RestauranteController {
      //       BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
             return restauranteConverter.toDto(cadastroRestauranteService.salvar(restauranteAtual));
-        } catch (EntidadeNaoEncontradaException e) {
+        } catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
             throw new NegocioException(e.getMessage());
         }
     }
