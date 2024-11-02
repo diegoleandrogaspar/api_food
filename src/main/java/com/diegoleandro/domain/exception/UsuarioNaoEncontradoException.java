@@ -5,4 +5,10 @@ public class UsuarioNaoEncontradoException extends EntidadeNaoEncontradaExceptio
     public UsuarioNaoEncontradoException(String mensagem) {
         super(mensagem);
     }
+
+    public UsuarioNaoEncontradoException(Long usuarioId) {
+        this(String.format("Não existe cadastro de grupo com o id fornecido %d", usuarioId));
+
+
+    }
 }
