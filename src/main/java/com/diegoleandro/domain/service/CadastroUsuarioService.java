@@ -1,5 +1,7 @@
 package com.diegoleandro.domain.service;
 
+import com.diegoleandro.api.model.input.SenhaInput;
+import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.exception.UsuarioNaoEncontradoException;
 import com.diegoleandro.domain.model.Usuario;
 import com.diegoleandro.domain.repository.UsuarioRepository;
@@ -22,6 +24,15 @@ public class CadastroUsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
+        Usuario usuario = buscarOuFalhar(usuarioId);
+
+        if (usuario.senhaNaoCoincideCom(senhaAtual)) {
+            throw new NegocioException("Senha atual informada não coincide com a senha do usuário");
+        }
+        usuario.setSenha(novaSenha);
+    }
+
     @Transactional
     public void deletar(Long usuarioId) {
         try {
@@ -37,4 +48,9 @@ public class CadastroUsuarioService {
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(
                         String.format(MSG_USUARIO_NAO_ENCONTRADO, usuarioId)));
     }
+
+
+
+
+
 }
