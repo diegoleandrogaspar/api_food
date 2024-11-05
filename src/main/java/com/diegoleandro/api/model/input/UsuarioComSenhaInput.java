@@ -10,6 +10,6 @@ import javax.validation.constraints.NotBlank;
 public class UsuarioComSenhaInput extends UsuarioInput {
 
     @NotBlank
-    private String email;
+    private String senha;
 
 }

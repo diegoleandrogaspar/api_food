@@ -39,8 +39,5 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO, UsuarioI
         modelMapper.map(usuarioInput, usuario);
     }
 
-    public void copyPassword(UsuarioComSenhaInput senhaInput, Usuario usuario) {
-        modelMapper.map(senhaInput, usuario);
-    }
 
 }
