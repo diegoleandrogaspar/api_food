@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class GrupoConverter implements Converter<Grupo, GrupoDTO, GrupoInput>{
     }
 
     @Override
-    public List<GrupoDTO> toCollectionDTO(List<Grupo> grupoList) {
+    public List<GrupoDTO> toCollectionDTO(Collection<Grupo> grupoList) {
          return grupoList.stream()
                  .map(grupo -> toDto(grupo))
                  .collect(Collectors.toList());

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO, UsuarioI
     }
 
     @Override
-    public List<UsuarioDTO> toCollectionDTO(List<Usuario> usuarios) {
+    public List<UsuarioDTO> toCollectionDTO(Collection<Usuario> usuarios) {
         return usuarios.stream()
                 .map(usuario -> toDto(usuario))
                 .collect(Collectors.toList());
@@ -38,6 +39,4 @@ public class UsuarioConverter implements Converter<Usuario, UsuarioDTO, UsuarioI
     public void copyToDomainObject(UsuarioInput usuarioInput, Usuario usuario) {
         modelMapper.map(usuarioInput, usuario);
     }
-
-
 }

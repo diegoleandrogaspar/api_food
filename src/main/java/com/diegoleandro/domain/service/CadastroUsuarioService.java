@@ -55,8 +55,7 @@ public class CadastroUsuarioService {
 
     public Usuario buscarOuFalhar(Long usuarioId) {
         return usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new UsuarioNaoEncontradoException(
-                        String.format(MSG_USUARIO_NAO_ENCONTRADO, usuarioId)));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(usuarioId));
     }
 
 

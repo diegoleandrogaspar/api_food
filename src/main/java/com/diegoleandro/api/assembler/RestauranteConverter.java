@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class RestauranteConverter implements Converter<Restaurante, RestauranteD
     }
 
     @Override
-    public List<RestauranteDTO> toCollectionDTO(List<Restaurante> restaurantes) {
+    public List<RestauranteDTO> toCollectionDTO(Collection<Restaurante> restaurantes) {
         return restaurantes.stream()
                 .map(restaurante -> toDto(restaurante))
                 .collect(Collectors.toList());

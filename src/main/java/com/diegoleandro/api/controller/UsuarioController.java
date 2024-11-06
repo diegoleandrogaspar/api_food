@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping( value = "/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class UsuarioController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioDTO adicionar(@RequestBody @Valid UsuarioInput usuarioInput) {
+    public UsuarioDTO adicionar(@RequestBody @Valid UsuarioComSenhaInput usuarioInput) {
           Usuario usuario = usuarioConverter.toDomainObject(usuarioInput);
           usuario = cadastroUsuarioService.salvar(usuario);
 
@@ -51,11 +51,11 @@ public class UsuarioController {
     }
 
     @PutMapping("/{usuarioId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public UsuarioDTO atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioComSenhaInput usuarioInput){
+    public UsuarioDTO atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioInput usuarioInput){
             Usuario usuarioAtual = cadastroUsuarioService.buscarOuFalhar(usuarioId);
             usuarioConverter.copyToDomainObject(usuarioInput, usuarioAtual);
             usuarioAtual = cadastroUsuarioService.salvar(usuarioAtual);
+
             return usuarioConverter.toDto(usuarioAtual);
     }
 

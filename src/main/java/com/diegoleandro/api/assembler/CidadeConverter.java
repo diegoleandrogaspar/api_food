@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class CidadeConverter implements Converter<Cidade, CidadeDTO, CidadeInput
     }
 
     @Override
-    public List<CidadeDTO> toCollectionDTO(List<Cidade> cidadeList) {
+    public List<CidadeDTO> toCollectionDTO(Collection<Cidade> cidadeList) {
         return cidadeList.stream()
                 .map(cidade -> toDto(cidade))
                 .collect(Collectors.toList());
