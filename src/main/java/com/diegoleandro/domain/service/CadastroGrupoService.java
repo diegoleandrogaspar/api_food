@@ -29,7 +29,8 @@ public class CadastroGrupoService {
             grupoRepository.flush();
 
         } catch (EmptyResultDataAccessException ex){
-            throw new GrupoNaoEncontradoException(String.format(MSG_GRUPO_NAO_ENCONTRADO, grupoId) );
+            throw new GrupoNaoEncontradoException(
+                    String.format(MSG_GRUPO_NAO_ENCONTRADO, grupoId) );
         }
     }
 
