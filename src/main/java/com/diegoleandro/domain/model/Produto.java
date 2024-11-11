@@ -33,5 +33,4 @@ public class Produto {
     @JoinColumn(nullable = false)
     private Restaurante restaurante;
 
-
 }

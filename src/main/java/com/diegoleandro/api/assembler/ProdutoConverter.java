@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,7 +28,7 @@ public class ProdutoConverter implements Converter<Produto, ProdutoDTO, ProdutoI
     }
 
     @Override
-    public Collection<ProdutoDTO> toCollectionDTO(Collection<Produto> produtos) {
+    public List<ProdutoDTO> toCollectionDTO(Collection<Produto> produtos) {
         return produtos.stream()
                 .map(produto -> toDto(produto))
                 .collect(Collectors.toList());

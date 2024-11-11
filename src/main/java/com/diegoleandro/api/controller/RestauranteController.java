@@ -24,13 +24,13 @@ import java.util.List;
 public class RestauranteController {
 
     @Autowired
-    RestauranteRepository restauranteRepository;
+    private RestauranteRepository restauranteRepository;
 
     @Autowired
-    CadastroRestauranteService cadastroRestauranteService;
+    private CadastroRestauranteService cadastroRestauranteService;
 
     @Autowired
-    RestauranteConverter restauranteConverter;
+    private RestauranteConverter restauranteConverter;
 
     @Autowired
     private SmartValidator validator;
