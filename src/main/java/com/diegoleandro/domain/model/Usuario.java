@@ -54,5 +54,4 @@ public class Usuario {
     public boolean removerGrupo(Grupo grupo) {
         return getGrupos().remove(grupo);
     }
-
 }
