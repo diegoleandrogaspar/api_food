@@ -24,7 +24,7 @@ import java.util.List;
 public class RestauranteFormaPagamentoController {
 
     @Autowired
-    CadastroRestauranteService cadastroRestauranteService;
+    private CadastroRestauranteService cadastroRestauranteService;
 
     @Autowired
     private FormaPagamentoConverter formaPagamentoConverter;
@@ -32,7 +32,6 @@ public class RestauranteFormaPagamentoController {
     @GetMapping
     public List<FormaPagamentoDTO> listar(@PathVariable Long restauranteId) {
             Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
-
             return formaPagamentoConverter.toCollectionDTO(restaurante.getFormasPagamento());
     }
 
@@ -47,5 +46,4 @@ public class RestauranteFormaPagamentoController {
     public void associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
         cadastroRestauranteService.associarFormaPagamento(restauranteId, formaPagamentoId);
     }
-
 }
