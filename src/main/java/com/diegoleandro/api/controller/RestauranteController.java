@@ -3,10 +3,7 @@ package com.diegoleandro.api.controller;
 import com.diegoleandro.api.assembler.RestauranteConverter;
 import com.diegoleandro.api.model.RestauranteDTO;
 import com.diegoleandro.api.model.input.RestauranteInput;
-import com.diegoleandro.domain.exception.CidadeNaoEncontradaException;
-import com.diegoleandro.domain.exception.CozinhaNaoEncontradaException;
-import com.diegoleandro.domain.exception.EntidadeNaoEncontradaException;
-import com.diegoleandro.domain.exception.NegocioException;
+import com.diegoleandro.domain.exception.*;
 import com.diegoleandro.domain.model.Restaurante;
 import com.diegoleandro.domain.repository.RestauranteRepository;
 import com.diegoleandro.domain.service.CadastroRestauranteService;
@@ -84,6 +81,26 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void inativar(@PathVariable Long restauranteId) {
         cadastroRestauranteService.inativar(restauranteId);
+    }
+
+    @PutMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+        try {
+            cadastroRestauranteService.ativar(restauranteIds);
+        } catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
+    @DeleteMapping("/ativacoes")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarMultiplos(@RequestBody List<Long> restauranteIds){
+        try {
+            cadastroRestauranteService.inativar(restauranteIds);
+        } catch (RestauranteNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 
     @PutMapping("/{restauranteId}/abertura")
