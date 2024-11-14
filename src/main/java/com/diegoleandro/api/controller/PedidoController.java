@@ -1,16 +1,21 @@
 package com.diegoleandro.api.controller;
 
 import com.diegoleandro.api.assembler.PedidoConverter;
+import com.diegoleandro.api.assembler.PedidoResumoConverter;
 import com.diegoleandro.api.model.PedidoDTO;
+import com.diegoleandro.api.model.PedidoResumoDTO;
+import com.diegoleandro.api.model.input.PedidoInput;
+import com.diegoleandro.domain.exception.EntidadeNaoEncontradaException;
+import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.model.Pedido;
+import com.diegoleandro.domain.model.Usuario;
 import com.diegoleandro.domain.repository.PedidoRepository;
 import com.diegoleandro.domain.service.EmissaoPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,10 +31,13 @@ public class PedidoController {
     @Autowired
     private PedidoConverter pedidoConverter;
 
+    @Autowired
+    private PedidoResumoConverter pedidoResumoConverter;
+
     @GetMapping
-    public List<PedidoDTO> listar (){
+    public List<PedidoResumoDTO> listar (){
         List<Pedido> todosPedidos = pedidoRepository.findAll();
-        return pedidoConverter.toCollection(todosPedidos);
+        return pedidoResumoConverter.toCollection(todosPedidos);
     }
 
     @GetMapping("/{pedidoId}")
@@ -37,4 +45,9 @@ public class PedidoController {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(pedidoId);
         return pedidoConverter.toDto(pedido);
     }
+
+
+
+
+
 }

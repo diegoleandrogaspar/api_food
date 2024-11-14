@@ -20,8 +20,8 @@ public class EnderecoInput {
     @NotBlank
     private String numero;
 
-    private String complemento;
     @NotBlank
+    private String complemento;
 
     @NotBlank
     private String bairro;

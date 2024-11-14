@@ -1,6 +1,7 @@
 package com.diegoleandro.api.assembler;
 
 import com.diegoleandro.api.model.PedidoDTO;
+import com.diegoleandro.api.model.input.PedidoInput;
 import com.diegoleandro.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class PedidoConverter {
     @Autowired
     private ModelMapper modelMapper;
 
+    public Pedido toDomainObject(PedidoInput pedidoInput) {
+        return modelMapper.map(pedidoInput, Pedido.class);
+    }
+
     public PedidoDTO toDto(Pedido pedido) {
         return modelMapper.map(pedido, PedidoDTO.class);
     }
@@ -24,6 +29,10 @@ public class PedidoConverter {
         return pedidos.stream()
                 .map(pedido -> toDto(pedido))
                 .collect(Collectors.toList());
+    }
+
+    public void copyToDomainObject(PedidoInput pedidoInput, Pedido pedido){
+        modelMapper.map(pedidoInput, pedido);
     }
 
 

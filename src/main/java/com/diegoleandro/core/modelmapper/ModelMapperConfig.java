@@ -2,6 +2,7 @@ package com.diegoleandro.core.modelmapper;
 
 import com.diegoleandro.api.model.EnderecoDTO;
 import com.diegoleandro.domain.model.Endereco;
+import com.diegoleandro.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ public class ModelMapperConfig {
         enderecoToEnderecoModelTypeMap.<String>addMapping(
                 src -> src.getCidade().getEstado().getNome(),
                 (dest, value) -> dest.getCidade().setEstado(value));
+
+        modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+                .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         return modelMapper;
     }
