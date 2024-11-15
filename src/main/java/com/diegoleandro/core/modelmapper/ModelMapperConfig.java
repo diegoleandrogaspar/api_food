@@ -1,6 +1,7 @@
 package com.diegoleandro.core.modelmapper;
 
 import com.diegoleandro.api.model.EnderecoDTO;
+import com.diegoleandro.api.model.input.ItemPedidoInput;
 import com.diegoleandro.domain.model.Endereco;
 import com.diegoleandro.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;

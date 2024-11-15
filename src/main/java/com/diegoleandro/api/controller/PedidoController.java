@@ -46,6 +46,23 @@ public class PedidoController {
         return pedidoConverter.toDto(pedido);
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PedidoDTO adicionar(@RequestBody PedidoInput pedidoInput) {
+        try {
+            Pedido pedidoNovo = pedidoConverter.toDomainObject(pedidoInput);
+
+            pedidoNovo.setCliente(new Usuario());
+            pedidoNovo.getCliente().setId(1L);
+
+            pedidoNovo = emissaoPedidoService.emitir(pedidoNovo);
+            return pedidoConverter.toDto(pedidoNovo);
+
+        } catch (EntidadeNaoEncontradaException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
+    }
+
 
 
 

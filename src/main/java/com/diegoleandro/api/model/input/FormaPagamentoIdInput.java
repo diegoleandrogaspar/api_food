@@ -11,5 +11,4 @@ public class FormaPagamentoIdInput {
 
     @NotNull
     private Long formaPagamento;
-
 }
