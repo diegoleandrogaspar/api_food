@@ -62,9 +62,4 @@ public class PedidoController {
             throw new NegocioException(e.getMessage(), e);
         }
     }
-
-
-
-
-
 }
