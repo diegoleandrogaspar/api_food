@@ -1,6 +1,7 @@
 package com.diegoleandro.api.assembler;
 
 import com.diegoleandro.api.model.PedidoDTO;
+import com.diegoleandro.api.model.PedidoResumoDTO;
 import com.diegoleandro.api.model.input.PedidoInput;
 import com.diegoleandro.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
@@ -28,6 +29,17 @@ public class PedidoConverter {
     public List<PedidoDTO> toCollection(Collection<Pedido> pedidos) {
         return pedidos.stream()
                 .map(pedido -> toDto(pedido))
+                .collect(Collectors.toList());
+    }
+
+    public PedidoResumoDTO converter(Pedido pedido){
+        return modelMapper.map(pedido, PedidoResumoDTO.class);
+    }
+
+
+    public List<PedidoResumoDTO> converteDTO(Collection<Pedido> pedidos) {
+        return pedidos.stream()
+                .map(pedido -> converter(pedido))
                 .collect(Collectors.toList());
     }
 

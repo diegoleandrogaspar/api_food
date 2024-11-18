@@ -1,5 +1,6 @@
 package com.diegoleandro.api.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.Getter;
 import lombok.Setter;
 
