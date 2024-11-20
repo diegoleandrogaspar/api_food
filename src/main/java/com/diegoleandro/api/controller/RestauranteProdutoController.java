@@ -32,10 +32,18 @@ public class RestauranteProdutoController {
     private ProdutoConverter produtoConverter;
 
     @GetMapping
-    public List<ProdutoDTO> listar(@PathVariable Long restauranteId){
+    public List<ProdutoDTO> listar(@PathVariable Long restauranteId, @RequestParam(required = false) boolean incluirInvativos) {
         Restaurante restaurante = cadastroRestauranteService.buscarOuFalhar(restauranteId);
-        List<Produto> produtos = produtoRepository.findByRestaurante(restaurante);
-        return produtoConverter.toCollectionDTO(produtos);
+
+        List<Produto> todosProdutos = null;
+
+        if (incluirInvativos) {
+            todosProdutos = produtoRepository.findTodosdByRestaurante(restaurante);
+        } else{
+           todosProdutos = produtoRepository.findAtivosByRestaurante(restaurante);
+        }
+
+        return produtoConverter.toCollectionDTO(todosProdutos);
     }
 
     @GetMapping("/{produtoId}")

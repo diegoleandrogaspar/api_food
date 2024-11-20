@@ -10,7 +10,9 @@ import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.model.Pedido;
 import com.diegoleandro.domain.model.Usuario;
 import com.diegoleandro.domain.repository.PedidoRepository;
+import com.diegoleandro.domain.repository.filter.PedidoFilter;
 import com.diegoleandro.domain.service.EmissaoPedidoService;
+import com.diegoleandro.infrastructure.repository.spec.PedidoSpecs;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.apache.commons.lang3.StringUtils;
@@ -54,22 +56,16 @@ public class PedidoController {
         }
 
         pedidosWrapper.setFilters(filterProvider);
-
         return pedidosWrapper;
 
-
     }
-
 */
 
-
     @GetMapping
-    public List<PedidoResumoDTO> listar (){
-        List<Pedido> todosPedidos = pedidoRepository.findAll();
+    public List<PedidoResumoDTO> pesquisar(PedidoFilter filtro){
+        List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
         return pedidoResumoConverter.toCollection(todosPedidos);
     }
-
-
 
     @GetMapping("/{codigoPedido}")
     public PedidoDTO buscar(@PathVariable String codigoPedido) {

@@ -99,6 +99,15 @@ insert into pedido (id,codigo, restaurante_id, usuario_cliente_id, forma_pagamen
 values (1, uuid(), 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
         'CRIADO', utc_timestamp, 298.90, 10, 308.90);
 
+
+insert into pedido (id,codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (3, uuid(), 1, 2, 1, 1, '54543-300', 'Rua Piracaia', '916', 'Apto 801', 'Brasil',
+        'CRIADO', utc_timestamp, 312.20, 15, 202.50);
+
+
+
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (1, 1, 1, 1, 78.9, 78.9, null);
 
