@@ -8,6 +8,9 @@ import com.diegoleandro.domain.repository.CozinhaRepository;
 import com.diegoleandro.domain.service.CadastroCozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +32,17 @@ public class CozinhaController {
     private CozinhaConverter cozinhaConverter;
 
     @GetMapping
-    public List<CozinhaDTO> listar() {
-        List<Cozinha> todasCozinhas = cozinhaRepository.findAll();
+    public Page<CozinhaDTO> listar(Pageable pageable) {
+        Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 
-        return cozinhaConverter.toCollectionDTO(todasCozinhas);
+        List<CozinhaDTO> cozinhaDTO = cozinhaConverter
+                .toCollectionDTO(cozinhasPage.getContent());
+
+        Page<CozinhaDTO> cozinhasDTOPage = new PageImpl<>(cozinhaDTO, pageable,
+                cozinhasPage.getTotalElements());
+
+        return cozinhasDTOPage;
+
     }
 
     @GetMapping("/{cozinhaId}")
