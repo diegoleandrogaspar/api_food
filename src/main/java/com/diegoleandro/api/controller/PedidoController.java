@@ -5,6 +5,7 @@ import com.diegoleandro.api.assembler.PedidoResumoConverter;
 import com.diegoleandro.api.model.PedidoDTO;
 import com.diegoleandro.api.model.PedidoResumoDTO;
 import com.diegoleandro.api.model.input.PedidoInput;
+import com.diegoleandro.core.data.PageableTranslator;
 import com.diegoleandro.domain.exception.EntidadeNaoEncontradaException;
 import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.model.Pedido;
@@ -15,7 +16,9 @@ import com.diegoleandro.domain.service.EmissaoPedidoService;
 import com.diegoleandro.infrastructure.repository.spec.PedidoSpecs;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -64,9 +67,10 @@ public class PedidoController {
 
     }
 */
-
     @GetMapping
     public Page<PedidoResumoDTO> pesquisar(PedidoFilter filtro, @PageableDefault(size = 2) Pageable pageable){
+
+        pageable = traduzirPageable(pageable);
 
         Page<Pedido> pedidoPage = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro), pageable);
 
@@ -99,4 +103,16 @@ public class PedidoController {
             throw new NegocioException(e.getMessage(), e);
         }
     }
+
+    private Pageable traduzirPageable(Pageable apiPageable) {
+        var mapeamento = ImmutableMap.of(
+                "codigo", "codigo",
+                    "restaurante.nome", "restaurante.nome",
+                    "nomeCliente", "cliente.nome",
+                    "valorTotal", "valorTotal"
+                );
+
+        return PageableTranslator.translate(apiPageable, mapeamento);
+    }
+
 }
