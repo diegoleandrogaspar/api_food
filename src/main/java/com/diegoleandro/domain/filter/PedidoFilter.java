@@ -1,4 +1,4 @@
-package com.diegoleandro.domain.repository.filter;
+package com.diegoleandro.domain.filter;
 
 import lombok.Getter;
 import lombok.Setter;

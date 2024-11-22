@@ -11,24 +11,18 @@ import com.diegoleandro.domain.exception.NegocioException;
 import com.diegoleandro.domain.model.Pedido;
 import com.diegoleandro.domain.model.Usuario;
 import com.diegoleandro.domain.repository.PedidoRepository;
-import com.diegoleandro.domain.repository.filter.PedidoFilter;
+import com.diegoleandro.domain.filter.PedidoFilter;
 import com.diegoleandro.domain.service.EmissaoPedidoService;
 import com.diegoleandro.infrastructure.repository.spec.PedidoSpecs;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

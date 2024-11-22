@@ -1,11 +1,9 @@
 package com.diegoleandro.infrastructure.repository.spec;
 
 import com.diegoleandro.domain.model.Pedido;
-import com.diegoleandro.domain.model.Restaurante;
-import com.diegoleandro.domain.repository.filter.PedidoFilter;
+import com.diegoleandro.domain.filter.PedidoFilter;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.persistence.criteria.Predicate;
 
