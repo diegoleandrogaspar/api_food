@@ -32,6 +32,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
                 builder.count(root.get("id")),
                 builder.sum(root.get("valorTotal")));
 
+
         query.select(selection);
         query.groupBy(functionDateDataCriacao);
 
