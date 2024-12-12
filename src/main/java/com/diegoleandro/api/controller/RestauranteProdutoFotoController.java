@@ -31,6 +31,13 @@ public class RestauranteProdutoFotoController {
     @Autowired
     private CatalogoFotoProdutoService catalogoFotoProduto;
 
+
+    @GetMapping
+    public FotoProdutoDTO recuperarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+        FotoProduto foto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
+        return fotoProdutoConverter.toDTO(foto);
+    }
+
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoDTO atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId, @Valid FotoProdutoInput fotoProdutoInput) throws IOException {
 
@@ -47,7 +54,6 @@ public class RestauranteProdutoFotoController {
 
         FotoProduto fotoSalva = catalogoFotoProduto.salvar(foto, arquivo.getInputStream());
         return fotoProdutoConverter.toDTO(fotoSalva);
-
     }
 
 }

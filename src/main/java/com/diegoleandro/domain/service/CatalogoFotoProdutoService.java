@@ -1,5 +1,6 @@
 package com.diegoleandro.domain.service;
 
+import com.diegoleandro.domain.exception.FotoProdutoNaoEncontradaException;
 import com.diegoleandro.domain.model.FotoProduto;
 import com.diegoleandro.domain.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +42,14 @@ public class CatalogoFotoProdutoService {
                 .inputStream(dadosArquivo)
                 .build();
 
-
         fotoStorageService.substituir(nomeArquivoExistente, novaFoto);
-
-
         return foto;
     }
+
+    public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId){
+        return produtoRepository.findFotoById(restauranteId, produtoId)
+                .orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
+    }
+
+
 }
