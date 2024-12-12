@@ -17,7 +17,6 @@ public class FileSizeValidator implements ConstraintValidator<FileSize, Multipar
 
     @Override
     public boolean isValid(MultipartFile value, ConstraintValidatorContext constraintValidatorContext) {
-
         return value == null || value.getSize() <= this.maxSize.toBytes();
     }
 }
